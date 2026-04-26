@@ -4,6 +4,8 @@
 [![Frontend](https://img.shields.io/badge/frontend-React%20%2B%20Vite-61DAFB)](https://vitejs.dev/)
 [![Auth](https://img.shields.io/badge/auth-JWT%20Cookies-orange)](https://django-rest-framework-simplejwt.readthedocs.io/)
 
+> Simulate and test your webhooks effortlessly.
+
 Full-stack mock API platform to create custom REST endpoints and inspect real request traffic.
 
 ## Overview
