@@ -1,8 +1,12 @@
 import axios from "axios"
 
+// Read the backend base URL from .env (Vite exposes VITE_* vars to the client).
+// Falls back to localhost so the app still runs if the env var is missing.
+export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000"
+
 const API = axios.create({
-  baseURL: "http://localhost:8000",
-  withCredentials: true 
+  baseURL: API_BASE,
+  withCredentials: true
 })
 
 let isRefreshing = false
