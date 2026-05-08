@@ -18,6 +18,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
 
+# Cookie settings adapt to environment:
+#   DEBUG=True  (local http://localhost) -> SameSite=Lax, Secure=False
+#   DEBUG=False (production cross-domain HTTPS) -> SameSite=None, Secure=True
+COOKIE_SECURE = not settings.DEBUG
+COOKIE_SAMESITE = "Lax" if settings.DEBUG else "None"
+
+
 class CheckAuth(APIView):
     permission_classes=[IsAuthenticated]
 
@@ -41,8 +48,8 @@ class LoginView(TokenObtainPairView):
                 key="access_token",
                 value=access_token,
                 httponly=True,
-                secure=False,  # set to True in production (HTTPS)
-                samesite="Lax",
+                secure=COOKIE_SECURE,
+                samesite=COOKIE_SAMESITE,
                 max_age=60 * 5,
             )
 
@@ -50,8 +57,8 @@ class LoginView(TokenObtainPairView):
                 key="refresh_token",
                 value=refresh_token,
                 httponly=True,
-                secure=False,  # set to True in production
-                samesite="Lax",
+                secure=COOKIE_SECURE,
+                samesite=COOKIE_SAMESITE,
                 max_age=60 * 60 * 24 * 7,
             )
 
@@ -125,14 +132,14 @@ class RefreshCookie(APIView):
             response.set_cookie(
                 key="access_token",
                 value=str(refresh.access_token),
-                httponly=True, secure=False, samesite="Lax"
+                httponly=True, secure=COOKIE_SECURE, samesite=COOKIE_SAMESITE
             )
 
 
             response.set_cookie(
                 key="refresh_token",
                 value=str(refresh), 
-                httponly=True, secure=False, samesite="Lax",
+                httponly=True, secure=COOKIE_SECURE, samesite=COOKIE_SAMESITE,
                 max_age=24 * 60 * 60 
             )
 
