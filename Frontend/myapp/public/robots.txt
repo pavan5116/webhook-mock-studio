@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://webhook-mock-studio.vercel.app/sitemap.xml
